@@ -306,6 +306,17 @@ h1 {
     background: #e0a800;
 }
 
+.btn-clear {
+    background: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.btn-clear:hover:not(:disabled) {
+    background: #5a6268;
+}
+
 .btn-save-list {
     background: #28a745;
     color: white;
@@ -406,7 +417,8 @@ h1 {
     }
 
     .btn-export,
-    .btn-import {
+    .btn-import,
+    .btn-clear {
         flex: 1;
         font-size: 13px;
         padding: 10px 12px;

@@ -17,6 +17,7 @@ const importFile = document.getElementById('importFile');
 const listSelector = document.getElementById('listSelector');
 const listNameInput = document.getElementById('listNameInput');
 const deleteListBtn = document.getElementById('deleteListBtn');
+const clearListBtn = document.getElementById('clearListBtn');
 
 // Initialize canvas
 const ctx = wheelCanvas.getContext('2d');
@@ -110,6 +111,8 @@ function loadList(listName) {
         updateStudentList();
         generateWheel();
         updateListSelector();
+        // Save the current list selection so it persists on refresh
+        saveAllLists();
     }
 }
 
@@ -128,6 +131,27 @@ function deleteCurrentList() {
         updateStudentList();
         generateWheel();
         saveAllLists();
+        updateListSelector();
+    }
+}
+
+// Clear current list (but keep it saved if it has a name)
+function clearCurrentList() {
+    if (students.length === 0) {
+        alert('The list is already empty! You can start adding students.');
+        return;
+    }
+
+    if (confirm('Are you sure you want to create a new list? This will not affect your saved lists.')) {
+        students = [];
+        colors = [];
+        updateStudentList();
+        generateWheel();
+
+        // Clear the list name input and reset current selection
+        // Don't save empty array to saved lists - just clear the working list
+        listNameInput.value = '';
+        currentListName = '';
         updateListSelector();
     }
 }
@@ -477,6 +501,7 @@ listNameInput.addEventListener('keypress', (e) => {
 });
 
 deleteListBtn.addEventListener('click', deleteCurrentList);
+clearListBtn.addEventListener('click', clearCurrentList);
 
 // Load students on page load
 loadAllLists();
