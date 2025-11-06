@@ -284,14 +284,35 @@ function spinWheel() {
     // Calculate angle to rotate so winning student is at top (arrow position)
     const anglePerStudent = (2 * Math.PI) / students.length;
 
-    // Arrow points to top (270 degrees or -90 degrees)
-    // We need to rotate so the winning segment's center is at the top
-    const segmentCenterAngle = winningIndex * anglePerStudent + anglePerStudent / 2;
-    // The segment center should align with the top (which is -90 degrees or 270 degrees)
-    const targetRotation = -segmentCenterAngle + Math.PI / 2;
+    // Wheel is drawn starting at -π/2 (top), going counter-clockwise
+    // Segment centers are at: -π/2 + index*anglePerStudent + anglePerStudent/2
+    // Arrow points to top (-π/2)
+    // CSS rotate() rotates clockwise, so we need to account for this
 
-    // Normalize to positive rotation
-    const normalizedRotation = targetRotation < 0 ? targetRotation + 2 * Math.PI : targetRotation;
+    // Current position of winning segment center (in canvas coordinates)
+    const segmentCenterAngle = -Math.PI / 2 + winningIndex * anglePerStudent + anglePerStudent / 2;
+
+    // We want the segment center to end up at -π/2 (top where arrow points)
+    // Since CSS rotates clockwise and canvas is counter-clockwise:
+    // After clockwise rotation R: newAngle = oldAngle - R
+    // So: segmentCenterAngle - R = -π/2
+    // Therefore: R = segmentCenterAngle + π/2
+
+    // But we want to rotate the minimum amount, so we can also think:
+    // We need to rotate clockwise by: (segmentCenterAngle - (-π/2)) mod 2π
+    // Which simplifies to: (segmentCenterAngle + π/2) mod 2π
+
+    let targetRotation = segmentCenterAngle + Math.PI / 2;
+
+    // Add adjustment to account for visual alignment
+    // If arrow stops to the left of center, rotate more clockwise (increase rotation)
+    // Adjust this value if needed: positive = more clockwise, negative = more counter-clockwise
+    targetRotation += anglePerStudent * 0.05; // 5% of segment width adjustment
+
+    // Normalize to 0 to 2π range
+    targetRotation = ((targetRotation % (2 * Math.PI)) + (2 * Math.PI)) % (2 * Math.PI);
+
+    const normalizedRotation = targetRotation;
 
     // Calculate total rotation (multiple spins + final position)
     const spins = 5; // Number of full rotations
