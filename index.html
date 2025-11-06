@@ -39,12 +39,11 @@
                     <div class="list-name-group">
                         <input type="text" id="listNameInput" placeholder="Enter name for this list (e.g., Class A)"
                             class="list-name-input" />
-                        <button id="saveListBtn" class="btn btn-save-list">💾 Save List</button>
+                        <button id="exportBtn" class="btn btn-export" title="Save list and download to computer">📥
+                            Download List</button>
                     </div>
                 </div>
                 <div class="file-buttons">
-                    <button id="exportBtn" class="btn btn-export" title="Download your list as a file">📥 Download
-                        List</button>
                     <button id="importBtn" class="btn btn-import" title="Upload a previously saved list file">📤 Upload
                         List</button>
                     <input type="file" id="importFile" accept=".json,.txt" style="display: none;" />
@@ -52,8 +51,8 @@
             </div>
             <h2>Students</h2>
             <ul id="studentList" class="student-list"></ul>
-            <p class="help-text">💡 Tip: Save your list with a name to keep it for later. Use the dropdown above to
-                switch between saved lists.</p>
+            <p class="help-text">💡 Tip: Enter a list name and click "Download List" to save it and download to your
+                computer. Use the dropdown above to switch between saved lists.</p>
         </div>
     </div>
 

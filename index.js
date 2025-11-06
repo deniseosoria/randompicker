@@ -16,7 +16,6 @@ const importBtn = document.getElementById('importBtn');
 const importFile = document.getElementById('importFile');
 const listSelector = document.getElementById('listSelector');
 const listNameInput = document.getElementById('listNameInput');
-const saveListBtn = document.getElementById('saveListBtn');
 const deleteListBtn = document.getElementById('deleteListBtn');
 
 // Initialize canvas
@@ -112,31 +111,6 @@ function loadList(listName) {
         generateWheel();
         updateListSelector();
     }
-}
-
-// Create or update a list
-function saveList() {
-    const listName = listNameInput.value.trim();
-    if (!listName) {
-        alert('Please enter a name for your list!');
-        listNameInput.focus();
-        return;
-    }
-
-    // Save current students to the list
-    allLists[listName] = [...students];
-    currentListName = listName;
-    saveAllLists();
-    updateListSelector();
-
-    // Show success feedback
-    const originalText = saveListBtn.textContent;
-    saveListBtn.textContent = '✓ Saved!';
-    saveListBtn.style.background = '#28a745';
-    setTimeout(() => {
-        saveListBtn.textContent = originalText;
-        saveListBtn.style.background = '';
-    }, 2000);
 }
 
 // Delete current list
@@ -346,15 +320,35 @@ studentInput.addEventListener('keypress', (e) => {
 
 goBtn.addEventListener('click', spinWheel);
 
-// Export students to JSON file
+// Export students to JSON file (also saves to localStorage)
 exportBtn.addEventListener('click', () => {
     if (students.length === 0) {
         alert('No students to download! Please add some students first.');
         return;
     }
 
+    // Get list name from input or use current list name
+    const listName = listNameInput.value.trim() || currentListName || 'Unnamed List';
+
+    // Save to localStorage if a name is provided
+    if (listNameInput.value.trim()) {
+        allLists[listName] = [...students];
+        currentListName = listName;
+        saveAllLists();
+        updateListSelector();
+
+        // Show success feedback
+        const originalText = exportBtn.textContent;
+        exportBtn.textContent = '✓ Saved & Downloaded!';
+        exportBtn.style.background = '#28a745';
+        setTimeout(() => {
+            exportBtn.textContent = originalText;
+            exportBtn.style.background = '';
+        }, 2000);
+    }
+
     const exportData = {
-        listName: currentListName || 'Unnamed List',
+        listName: listName,
         students: students,
         exportedAt: new Date().toISOString()
     };
@@ -364,7 +358,7 @@ exportBtn.addEventListener('click', () => {
     const url = URL.createObjectURL(dataBlob);
     const link = document.createElement('a');
     link.href = url;
-    const fileName = currentListName ? `${currentListName.replace(/[^a-z0-9]/gi, '_')}.json` : 'students.json';
+    const fileName = `${listName.replace(/[^a-z0-9]/gi, '_')}.json`;
     link.download = fileName;
     link.click();
     URL.revokeObjectURL(url);
@@ -475,11 +469,10 @@ listSelector.addEventListener('change', (e) => {
     }
 });
 
-saveListBtn.addEventListener('click', saveList);
-
+// Allow Enter key to trigger download
 listNameInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        saveList();
+        exportBtn.click();
     }
 });
 
