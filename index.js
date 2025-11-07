@@ -50,6 +50,8 @@ function generateColor(index) {
 function saveAllLists() {
     localStorage.setItem('allStudentLists', JSON.stringify(allLists));
     localStorage.setItem('currentListName', currentListName);
+    // Also save current students even if no list name (for unsaved work)
+    localStorage.setItem('currentStudents', JSON.stringify(students));
 }
 
 // Load all lists from localStorage
@@ -73,6 +75,22 @@ function loadAllLists() {
     // Load current list if exists
     if (currentListName && allLists[currentListName]) {
         loadList(currentListName);
+    } else {
+        // If no named list is selected, load unsaved students if they exist
+        const unsavedStudents = localStorage.getItem('currentStudents');
+        if (unsavedStudents) {
+            try {
+                const savedStudents = JSON.parse(unsavedStudents);
+                if (savedStudents.length > 0) {
+                    students = savedStudents;
+                    colors = students.map((_, index) => generateColor(index));
+                    updateStudentList();
+                    generateWheel();
+                }
+            } catch (e) {
+                console.error('Error loading unsaved students:', e);
+            }
+        }
     }
 }
 
@@ -99,8 +117,9 @@ function updateListSelector() {
 function saveCurrentList() {
     if (currentListName) {
         allLists[currentListName] = [...students];
-        saveAllLists();
     }
+    // Always save current students to localStorage (even if no list name)
+    saveAllLists();
 }
 
 // Load a specific list
@@ -114,6 +133,9 @@ function loadList(listName) {
         updateListSelector();
         // Save the current list selection so it persists on refresh
         saveAllLists();
+
+        // Update button text (will show "+ New List" since list is saved)
+        updateNewListButton();
 
         // Hide the Save and Download List section when loading a saved list
         listSaveSection.style.display = 'none';
@@ -136,20 +158,22 @@ function deleteCurrentList() {
         generateWheel();
         saveAllLists();
         updateListSelector();
+        // Update button text (will show "Save List" since no currentListName)
+        updateNewListButton();
     }
 }
 
 // Clear current list (but keep it saved if it has a name)
 function clearCurrentList() {
-    // If list is empty, show save section (Save List functionality)
-    if (students.length === 0) {
+    // If list is empty OR not saved, show save section (Save List functionality)
+    if (students.length === 0 || !currentListName) {
         listSaveSection.style.display = 'block';
         listSaveSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         listNameInput.focus();
         return;
     }
 
-    // If list has students, clear it (New List functionality)
+    // If list has students AND is saved, clear it (New List functionality)
     if (confirm('Are you sure you want to create a new list? This will not affect your saved lists.')) {
         students = [];
         colors = [];
@@ -161,6 +185,12 @@ function clearCurrentList() {
         listNameInput.value = '';
         currentListName = '';
         updateListSelector();
+
+        // Update button text (will show "Save List" since no currentListName)
+        updateNewListButton();
+
+        // Clear unsaved students from localStorage
+        saveAllLists(); // This will save empty array
 
         // Show the Save and Download List section
         listSaveSection.style.display = 'block';
@@ -231,7 +261,9 @@ function updateStudentList() {
 
 // Update New List button text based on student list state
 function updateNewListButton() {
-    if (students.length === 0) {
+    // Show "Save List" if list is empty OR if list is not saved (no currentListName)
+    // Show "+ New List" only if list has students AND is saved (has currentListName)
+    if (students.length === 0 || !currentListName) {
         clearListBtn.textContent = 'Save List';
     } else {
         clearListBtn.textContent = '+ New List';
@@ -394,7 +426,7 @@ exportBtn.addEventListener('click', () => {
         currentListName = listName;
         saveAllLists();
         updateListSelector();
-        updateNewListButton(); // Update button text after saving
+        updateNewListButton(); // Update button text after saving (will show "+ New List" now)
 
         // Show success feedback
         const originalText = exportBtn.textContent;
