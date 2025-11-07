@@ -154,6 +154,13 @@ h1 {
     flex-wrap: wrap;
 }
 
+.upload-instruction {
+    color: #666;
+    font-size: 14px;
+    margin: 10px 0 5px 0;
+    font-style: italic;
+}
+
 .file-buttons {
     display: flex;
     gap: 10px;

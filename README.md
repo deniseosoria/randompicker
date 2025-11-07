@@ -16,17 +16,20 @@ A fun and interactive web application for randomly selecting students using a co
 - Remove students with the "-" button next to each name
 - Enter key support for quick student entry
 - Duplicate prevention to avoid adding the same student twice
+- Empty state message displays when the list is empty to guide users
 
 ### 💾 Multiple Named Lists
 - Create and save multiple student lists (e.g., "Class A", "Class B", "Team 1")
-- Switch between saved lists using the dropdown selector
+- Switch between saved lists using the dropdown selector in "Select Saved List" section
 - Auto-save functionality - your lists are automatically saved to your browser
 - List selection persists across page refreshes
+- Smart button behavior: "Save List" appears when list is empty or unsaved, "+ New List" appears when list has students and is saved
 
 ### 📥 Download & Upload
-- **Download List**: Save your list as a JSON file and download it to your computer
-- **Upload List**: Import previously saved lists from JSON files
+- **Download List**: Save your list as a JSON file and download it to your computer (also saves to browser)
+- **Upload List**: Import previously saved lists from JSON files on your PC
 - Lists can be shared between devices or backed up
+- Clear instructions guide users on how to upload saved lists
 
 ### 🆕 Quick Actions
 - **New List**: Clear the current list to start fresh (doesn't affect saved lists)
@@ -41,19 +44,21 @@ A fun and interactive web application for randomly selecting students using a co
 3. Click "Go!" to spin the wheel and randomly select a student
 
 ### Saving Lists
-1. Enter a name for your list (e.g., "Class A")
-2. Click "📥 Download List" to save and download your list
-3. Your list is automatically saved to your browser's local storage
+1. Click "Save List" button (appears when list is empty or unsaved) to reveal the "Save and Download List" section
+2. Enter a name for your list (e.g., "Class A")
+3. Click "Download List" to save and download your list
+4. Your list is automatically saved to your browser's local storage
 
 ### Loading Saved Lists
-1. Use the dropdown menu at the top to select a previously saved list
-2. The list will load automatically with all students displayed
+1. Go to the "Select Saved List" section
+2. Use the dropdown menu to select a previously saved list
+3. The list will load automatically with all students displayed
 
 ### Managing Lists
-- **Switch Lists**: Select a different list from the dropdown
-- **Clear List**: Click "🆕 New List" to start fresh
-- **Delete List**: Select a list from the dropdown, then click the 🗑️ button
-- **Import List**: Click "📤 Upload List" to load a previously downloaded JSON file
+- **Switch Lists**: Select a different list from the dropdown in "Select Saved List" section
+- **New List**: Click "+ New List" (or "Save List" if list is empty) to start fresh or save current list
+- **Delete List**: Select a list from the dropdown, then click the "Delete" button
+- **Import List**: Click "Upload List" in the "Select Saved List" section to load a previously downloaded JSON file from your PC
 
 ## Technical Details
 
