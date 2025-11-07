@@ -67,6 +67,13 @@ h1 {
     font-size: 1.3em;
 }
 
+.student-list-display .btn-clear {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 16px;
+}
+
 .list-save-section {
     margin-bottom: 30px;
 }

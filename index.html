@@ -30,6 +30,18 @@
         <div class="student-list-display">
             <h2>Students</h2>
             <ul id="studentList" class="student-list"></ul>
+            <button id="clearListBtn" class="btn btn-clear" title="Clear current list to start a new one">
+                + New List</button>
+        </div>
+
+        <div class="list-save-section" id="listSaveSection" style="display: none;">
+            <h2>Save and Download List</h2>
+            <div class="list-name-group">
+                <input type="text" id="listNameInput" placeholder="Enter name for this list (e.g., Class A)"
+                    class="list-name-input" />
+                <button id="exportBtn" class="btn btn-export" title="Save list and download to computer">
+                    Download List</button>
+            </div>
         </div>
 
         <div class="student-list-section">
@@ -46,20 +58,8 @@
                 <div class="file-buttons">
                     <button id="importBtn" class="btn btn-import" title="Upload a previously saved list file">Upload
                         List</button>
-                    <button id="clearListBtn" class="btn btn-clear" title="Clear current list to start a new one">
-                        + New List</button>
                     <input type="file" id="importFile" accept=".json,.txt" style="display: none;" />
                 </div>
-            </div>
-        </div>
-
-        <div class="list-save-section" id="listSaveSection" style="display: none;">
-            <h2>Save and Download List</h2>
-            <div class="list-name-group">
-                <input type="text" id="listNameInput" placeholder="Enter name for this list (e.g., Class A)"
-                    class="list-name-input" />
-                <button id="exportBtn" class="btn btn-export" title="Save list and download to computer">
-                    Download List</button>
             </div>
         </div>
     </div>

@@ -141,11 +141,15 @@ function deleteCurrentList() {
 
 // Clear current list (but keep it saved if it has a name)
 function clearCurrentList() {
+    // If list is empty, show save section (Save List functionality)
     if (students.length === 0) {
-        alert('The list is already empty! You can start adding students.');
+        listSaveSection.style.display = 'block';
+        listSaveSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        listNameInput.focus();
         return;
     }
 
+    // If list has students, clear it (New List functionality)
     if (confirm('Are you sure you want to create a new list? This will not affect your saved lists.')) {
         students = [];
         colors = [];
@@ -220,6 +224,18 @@ function updateStudentList() {
         li.appendChild(removeBtn);
         studentList.appendChild(li);
     });
+
+    // Update button text based on whether list is empty
+    updateNewListButton();
+}
+
+// Update New List button text based on student list state
+function updateNewListButton() {
+    if (students.length === 0) {
+        clearListBtn.textContent = 'Save List';
+    } else {
+        clearListBtn.textContent = '+ New List';
+    }
 }
 
 // Generate wheel with student segments
@@ -378,6 +394,7 @@ exportBtn.addEventListener('click', () => {
         currentListName = listName;
         saveAllLists();
         updateListSelector();
+        updateNewListButton(); // Update button text after saving
 
         // Show success feedback
         const originalText = exportBtn.textContent;
@@ -528,4 +545,7 @@ loadAllLists();
 
 // Initial wheel generation
 generateWheel();
+
+// Update button text on initial load
+updateNewListButton();
 
