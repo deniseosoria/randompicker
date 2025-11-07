@@ -18,6 +18,7 @@ const listSelector = document.getElementById('listSelector');
 const listNameInput = document.getElementById('listNameInput');
 const deleteListBtn = document.getElementById('deleteListBtn');
 const clearListBtn = document.getElementById('clearListBtn');
+const listSaveSection = document.getElementById('listSaveSection');
 
 // Initialize canvas
 const ctx = wheelCanvas.getContext('2d');
@@ -113,6 +114,9 @@ function loadList(listName) {
         updateListSelector();
         // Save the current list selection so it persists on refresh
         saveAllLists();
+
+        // Hide the Save and Download List section when loading a saved list
+        listSaveSection.style.display = 'none';
     }
 }
 
@@ -153,6 +157,12 @@ function clearCurrentList() {
         listNameInput.value = '';
         currentListName = '';
         updateListSelector();
+
+        // Show the Save and Download List section
+        listSaveSection.style.display = 'block';
+
+        // Scroll to the section smoothly
+        listSaveSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }
 
@@ -248,15 +258,23 @@ function generateWheel() {
         ctx.rotate(startAngle + anglePerStudent / 2);
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
-        ctx.fillStyle = '#fff';
         ctx.font = 'bold 14px Arial';
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        ctx.shadowBlur = 2;
 
         const textX = RADIUS * 0.6;
         const maxWidth = RADIUS * 0.5;
         const text = student.length > 12 ? student.substring(0, 10) + '...' : student;
+
+        // Draw text outline (border) with light black
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.4)';
+        ctx.lineWidth = 3;
+        ctx.lineJoin = 'round';
+        ctx.miterLimit = 2;
+        ctx.strokeText(text, textX, 0);
+
+        // Draw text fill (white) on top
+        ctx.fillStyle = '#fff';
         ctx.fillText(text, textX, 0);
+
         ctx.restore();
     });
 }
@@ -368,6 +386,8 @@ exportBtn.addEventListener('click', () => {
         setTimeout(() => {
             exportBtn.textContent = originalText;
             exportBtn.style.background = '';
+            // Hide the Save and Download List section after successful download
+            listSaveSection.style.display = 'none';
         }, 2000);
     }
 

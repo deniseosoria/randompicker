@@ -27,34 +27,40 @@
             </div>
         </div>
 
+        <div class="student-list-display">
+            <h2>Students</h2>
+            <ul id="studentList" class="student-list"></ul>
+        </div>
+
         <div class="student-list-section">
+            <h2>Select List</h2>
             <div class="list-header">
                 <div class="list-controls">
                     <div class="list-selector-group">
                         <select id="listSelector" class="list-selector">
                             <option value="">Select a saved list...</option>
                         </select>
-                        <button id="deleteListBtn" class="btn btn-delete" title="Delete current list">🗑️</button>
-                    </div>
-                    <div class="list-name-group">
-                        <input type="text" id="listNameInput" placeholder="Enter name for this list (e.g., Class A)"
-                            class="list-name-input" />
-                        <button id="exportBtn" class="btn btn-export" title="Save list and download to computer">📥
-                            Download List</button>
+                        <button id="deleteListBtn" class="btn btn-delete" title="Delete current list">Delete</button>
                     </div>
                 </div>
                 <div class="file-buttons">
-                    <button id="importBtn" class="btn btn-import" title="Upload a previously saved list file">📤 Upload
+                    <button id="importBtn" class="btn btn-import" title="Upload a previously saved list file">Upload
                         List</button>
-                    <button id="clearListBtn" class="btn btn-clear" title="Clear current list to start a new one">🆕
-                        New List</button>
+                    <button id="clearListBtn" class="btn btn-clear" title="Clear current list to start a new one">
+                        + New List</button>
                     <input type="file" id="importFile" accept=".json,.txt" style="display: none;" />
                 </div>
             </div>
-            <h2>Students</h2>
-            <ul id="studentList" class="student-list"></ul>
-            <p class="help-text">💡 Tip: Enter a list name and click "Download List" to save it and download to your
-                computer. Use the dropdown above to switch between saved lists.</p>
+        </div>
+
+        <div class="list-save-section" id="listSaveSection" style="display: none;">
+            <h2>Save and Download List</h2>
+            <div class="list-name-group">
+                <input type="text" id="listNameInput" placeholder="Enter name for this list (e.g., Class A)"
+                    class="list-name-input" />
+                <button id="exportBtn" class="btn btn-export" title="Save list and download to computer">
+                    Download List</button>
+            </div>
         </div>
     </div>
 

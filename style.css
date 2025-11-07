@@ -53,8 +53,38 @@ h1 {
     border-color: #667eea;
 }
 
+.student-input-section {
+    margin-bottom: 20px;
+}
+
+.student-list-display {
+    margin-bottom: 30px;
+}
+
+.student-list-display h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.list-save-section {
+    margin-bottom: 30px;
+}
+
+.list-save-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
 .student-list-section {
     margin-bottom: 30px;
+}
+
+.student-list-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.3em;
 }
 
 .list-header {
@@ -121,6 +151,7 @@ h1 {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .help-text {
@@ -285,32 +316,40 @@ h1 {
 }
 
 .btn-export {
-    background: #17a2b8;
-    color: white;
-    padding: 8px 16px;
-    font-size: 14px;
+    background: white;
+    color: #333;
+    padding: 15px 24px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
 }
 
 .btn-export:hover:not(:disabled) {
-    background: #138496;
+    background: #f8f9fa;
+    border-color: #667eea;
 }
 
 .btn-import {
-    background: #ffc107;
+    background: white;
     color: #333;
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 15px 24px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    flex: 1;
+    min-width: 0;
 }
 
 .btn-import:hover:not(:disabled) {
-    background: #e0a800;
+    background: #f8f9fa;
+    border-color: #667eea;
 }
 
 .btn-clear {
     background: #6c757d;
     color: white;
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 15px 24px;
+    font-size: 16px;
+    flex: 1;
+    min-width: 0;
 }
 
 .btn-clear:hover:not(:disabled) {
@@ -420,8 +459,8 @@ h1 {
     .btn-import,
     .btn-clear {
         flex: 1;
-        font-size: 13px;
-        padding: 10px 12px;
+        font-size: 15px;
+        padding: 14px 20px;
     }
 
     .help-text {
