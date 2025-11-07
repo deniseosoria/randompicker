@@ -237,23 +237,32 @@ function removeStudent(index) {
 // Update student list display
 function updateStudentList() {
     studentList.innerHTML = '';
-    students.forEach((student, index) => {
-        const li = document.createElement('li');
-        li.className = 'student-item';
 
-        const nameSpan = document.createElement('span');
-        nameSpan.textContent = student;
-        nameSpan.className = 'student-name';
+    if (students.length === 0) {
+        // Show empty state message
+        const emptyLi = document.createElement('li');
+        emptyLi.className = 'student-item-empty';
+        emptyLi.textContent = 'Empty - Add students above';
+        studentList.appendChild(emptyLi);
+    } else {
+        students.forEach((student, index) => {
+            const li = document.createElement('li');
+            li.className = 'student-item';
 
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = '-';
-        removeBtn.className = 'btn btn-remove';
-        removeBtn.onclick = () => removeStudent(index);
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = student;
+            nameSpan.className = 'student-name';
 
-        li.appendChild(nameSpan);
-        li.appendChild(removeBtn);
-        studentList.appendChild(li);
-    });
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = '-';
+            removeBtn.className = 'btn btn-remove';
+            removeBtn.onclick = () => removeStudent(index);
+
+            li.appendChild(nameSpan);
+            li.appendChild(removeBtn);
+            studentList.appendChild(li);
+        });
+    }
 
     // Update button text based on whether list is empty
     updateNewListButton();
