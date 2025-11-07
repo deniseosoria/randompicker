@@ -86,10 +86,27 @@ function loadAllLists() {
                     colors = students.map((_, index) => generateColor(index));
                     updateStudentList();
                     generateWheel();
+                } else {
+                    // List is empty, still update to show empty state
+                    students = [];
+                    colors = [];
+                    updateStudentList();
+                    generateWheel();
                 }
             } catch (e) {
                 console.error('Error loading unsaved students:', e);
+                // On error, ensure empty state is shown
+                students = [];
+                colors = [];
+                updateStudentList();
+                generateWheel();
             }
+        } else {
+            // No unsaved students, show empty state
+            students = [];
+            colors = [];
+            updateStudentList();
+            generateWheel();
         }
     }
 }
